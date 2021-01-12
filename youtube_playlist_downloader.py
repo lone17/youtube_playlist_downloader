@@ -7,11 +7,11 @@ from imutils import paths
 
 def download(playlist_url, download_dir='downloaded'):
     options = {
-        'format': 'bestaudio/best',
+        'format': 'bestaudio/mp3',
         'outtmpl': 'downloaded\\%(title)s.%(ext)s',
         'ignoreerrors': True,
-        'playliststart': 88,
-        'playlistend': 214,
+        # 'playliststart': 88,
+        # 'playlistend': 214,
         # 'playlist_items' [],
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
@@ -19,7 +19,8 @@ def download(playlist_url, download_dir='downloaded'):
             'preferredquality': '192',}],
     }
 
-    youtube_dl.YoutubeDL(options).download([playlist_url])
+    with youtube_dl.YoutubeDL(options) as ydl:
+        ydl.download([playlist_url])
 
 
 def rename_and_move(download_dir, music_dir):
@@ -46,10 +47,10 @@ def rename_and_move(download_dir, music_dir):
         else:
             print('>>> File existed:', new_file_path)
 
-# playlist_url = 'https://www.youtube.com/playlist?list=PLzp-YFqxu55FuIbr2VZR98ev_-9-BbZ1M'
+playlist_url = 'https://www.youtube.com/playlist?list=PLzp-YFqxu55FuIbr2VZR98ev_-9-BbZ1M'
 download_dir = 'downloaded'
 music_dir = 'music'
 
-# download(playlist_url)
+download(playlist_url)
 
 rename_and_move(download_dir, music_dir)
